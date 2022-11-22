@@ -2,18 +2,18 @@ package com.example.pokelist
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.service.controls.ControlsProviderService.TAG
 import android.util.Log
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.example.pokelist.Api.PokeApi
+import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pokelist.Api.RetrofitInstance
 import com.example.pokelist.databinding.ActivityMainBinding
-import com.example.pokelist.repository.Repository
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import retrofit2.HttpException
+import java.io.IOException
 
 private lateinit var binding: ActivityMainBinding
-private lateinit var viewModel: MainViewModel
+private lateinit var pokeAdapter: PokeAdapter
 
 
 class MainActivity : AppCompatActivity() {
@@ -22,20 +22,37 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        val repository = Repository()
-        val viewModelFactory = MainViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-        viewModel.getPokemon()
-        viewModel.myResponse.observe(this, Observer { response ->
-            Log.d("Response", response.next.toString())
-        })
+        setupRecyclerView()
+        lifecycleScope.launchWhenCreated {
+            binding.progressBar.isVisible = true
+            val response = try {
+                RetrofitInstance.api.getPokemons()
+            }catch (e: IOException) {
+                Log.e(TAG, "Vous n'avez peut être pas internet")
+                binding.progressBar.isVisible = false
+                return@launchWhenCreated
+            }catch (e: HttpException){
+                Log.e(TAG, "HttpException, réponse innatendue")
+                binding.progressBar.isVisible = false
+                return@launchWhenCreated
+            }
+            if(response.isSuccessful && response.body() != null) {
+                pokeAdapter.todos = response.body()!!
+            } else {
+                Log.e(TAG, "Response incorrecte")
+            }
+            binding.progressBar.isVisible = false
+        }
         OnViewCreated()
     }
 
+    private fun setupRecyclerView() = binding.rvPoke.apply {
+        pokeAdapter = PokeAdapter()
+        adapter = pokeAdapter
+        layoutManager = LinearLayoutManager(this@MainActivity)
+    }
+
     private fun OnViewCreated(){
-        binding.text.text = "test"
-
-
     }
 
 

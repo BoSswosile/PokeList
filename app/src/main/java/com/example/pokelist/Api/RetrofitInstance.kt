@@ -6,16 +6,13 @@ import kotlin.Lazy as lazy
 
 object RetrofitInstance {
 
-    var BASE = "https://pokeapi.co/api/v2/"
-
-    private val retrofit by lazy {
-        Retrofit.Builder().baseUrl(BASE)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
+    val BASE_URL = "https://pokeapi.co/"
 
     val api: PokeApi by lazy {
-        retrofit.create(PokeApi::class.java)
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(PokeApi::class.java)
     }
-
 }
