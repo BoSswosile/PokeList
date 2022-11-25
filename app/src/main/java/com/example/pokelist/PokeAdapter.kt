@@ -13,7 +13,7 @@ class PokeAdapter : RecyclerView.Adapter<PokeAdapter.PokeViewHolder>(){
 
     private val diffCallback = object : DiffUtil.ItemCallback<PokemonList>() {
         override fun areContentsTheSame(oldItem: PokemonList, newItem: PokemonList): Boolean {
-            return oldItem.name == newItem.name
+            return oldItem.results == newItem.results
         }
 
         override fun areItemsTheSame(oldItem: PokemonList, newItem: PokemonList): Boolean {
@@ -39,7 +39,7 @@ class PokeAdapter : RecyclerView.Adapter<PokeAdapter.PokeViewHolder>(){
     override fun onBindViewHolder(holder: PokeViewHolder, position: Int) {
         holder.binding.apply {
             val todo = todos[position]
-            tvTitle.text = todo.name
+            tvTitle.text = todo.results.toString()
         }
     }
 
