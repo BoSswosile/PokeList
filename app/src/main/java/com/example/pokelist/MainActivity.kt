@@ -28,18 +28,19 @@ class MainActivity : AppCompatActivity() {
             val response = try {
                 RetrofitInstance.api.getPokemons()
             }catch (e: IOException) {
-                Log.e(TAG, "Vous n'avez peut être pas internet")
+                Log.e(TAG, "** Vous n'avez peut être pas internet. EXCEPTION: $e")
                 binding.progressBar.isVisible = false
                 return@launchWhenCreated
             }catch (e: HttpException){
-                Log.e(TAG, "HttpException, réponse innatendue")
+                Log.e(TAG, "** HttpException, réponse innatendue. EXCEPTION: $e")
                 binding.progressBar.isVisible = false
                 return@launchWhenCreated
             }
-            if(response.isSuccessful && response.body() != null) {
-                pokeAdapter.todos = response.body()!!
+            val results = response.body()?.results
+            if(response.isSuccessful && results != null) {
+                pokeAdapter.todos = results
             } else {
-                Log.e(TAG, "Response incorrecte")
+                Log.e(TAG, "** Response incorrecte.")
             }
             binding.progressBar.isVisible = false
         }
