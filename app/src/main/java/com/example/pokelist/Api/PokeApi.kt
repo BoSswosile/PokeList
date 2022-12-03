@@ -1,12 +1,15 @@
 package com.example.pokelist.Api
 
-import com.example.pokelist.DataClass.PokemonList
+import com.example.pokelist.DataClass.PokemonResponseObject
 import retrofit2.Response
 import retrofit2.http.GET
 
 interface PokeApi {
 
-    @GET("/api/v2/pokemon?limit=10")
-    suspend fun getPokemons(): Response<List<PokemonList>>
+    @GET("/api/v2/pokemon?limit=100")
+    suspend fun getPokemons(): Response<PokemonResponseObject>
+
+    @GET("/api/v2/pokemon/"/*{ name of pokemon }*/)
+    suspend fun getPokemonsInfo(): Response<PokemonResponseObject>
 
 }

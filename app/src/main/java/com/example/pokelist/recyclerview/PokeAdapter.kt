@@ -1,28 +1,28 @@
-package com.example.pokelist
+package com.example.pokelist.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pokelist.DataClass.PokemonList
+import com.example.pokelist.DataClass.PokemonObject
 import com.example.pokelist.databinding.ItemTodoBinding
 
 class PokeAdapter : RecyclerView.Adapter<PokeAdapter.PokeViewHolder>(){
     inner class PokeViewHolder(val binding: ItemTodoBinding) : RecyclerView.ViewHolder(binding.root)
 
-    private val diffCallback = object : DiffUtil.ItemCallback<PokemonList>() {
-        override fun areContentsTheSame(oldItem: PokemonList, newItem: PokemonList): Boolean {
-            return oldItem.results == newItem.results
+    private val diffCallback = object : DiffUtil.ItemCallback<PokemonObject>() {
+        override fun areContentsTheSame(oldItem: PokemonObject, newItem: PokemonObject): Boolean {
+            return oldItem.url == newItem.url
         }
 
-        override fun areItemsTheSame(oldItem: PokemonList, newItem: PokemonList): Boolean {
+        override fun areItemsTheSame(oldItem: PokemonObject, newItem: PokemonObject): Boolean {
             return oldItem == newItem
         }
     }
 
     private val differ = AsyncListDiffer(this, diffCallback)
-    var todos: List<PokemonList>
+    var todos: List<PokemonObject>
         get() = differ.currentList
         set(value) { differ.submitList(value) }
 
@@ -39,7 +39,10 @@ class PokeAdapter : RecyclerView.Adapter<PokeAdapter.PokeViewHolder>(){
     override fun onBindViewHolder(holder: PokeViewHolder, position: Int) {
         holder.binding.apply {
             val todo = todos[position]
-            tvTitle.text = todo.results.toString()
+            tvTitle.text = todo.name
+        }
+        holder.itemView.setOnClickListener {
+
         }
     }
 
