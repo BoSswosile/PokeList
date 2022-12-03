@@ -9,4 +9,7 @@ interface PokeApi {
     @GET("/api/v2/pokemon?limit=100")
     suspend fun getPokemons(): Response<PokemonResponseObject>
 
+    @GET("/api/v2/pokemon/"/*{ name of pokemon }*/)
+    suspend fun getPokemonsInfo(): Response<PokemonResponseObject>
+
 }

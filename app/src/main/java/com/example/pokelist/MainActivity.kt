@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pokelist.Api.RetrofitInstance
 import com.example.pokelist.databinding.ActivityMainBinding
+import com.example.pokelist.recyclerview.PokeAdapter
 import retrofit2.HttpException
 import java.io.IOException
 

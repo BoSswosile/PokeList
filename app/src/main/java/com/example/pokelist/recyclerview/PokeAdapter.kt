@@ -1,13 +1,11 @@
-package com.example.pokelist
+package com.example.pokelist.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokelist.DataClass.PokemonObject
-import com.example.pokelist.DataClass.PokemonResponseObject
 import com.example.pokelist.databinding.ItemTodoBinding
 
 class PokeAdapter : RecyclerView.Adapter<PokeAdapter.PokeViewHolder>(){
@@ -42,6 +40,9 @@ class PokeAdapter : RecyclerView.Adapter<PokeAdapter.PokeViewHolder>(){
         holder.binding.apply {
             val todo = todos[position]
             tvTitle.text = todo.name
+        }
+        holder.itemView.setOnClickListener {
+
         }
     }
 
