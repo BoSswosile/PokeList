@@ -13,7 +13,7 @@ import com.example.pokelist.recyclerview.PokeAdapter
 import retrofit2.HttpException
 import java.io.IOException
 
-private lateinit var binding: ActivityMainBinding
+lateinit var binding: ActivityMainBinding
 private lateinit var pokeAdapter: PokeAdapter
 
 

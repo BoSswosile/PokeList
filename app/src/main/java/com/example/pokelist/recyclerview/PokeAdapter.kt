@@ -41,9 +41,6 @@ class PokeAdapter : RecyclerView.Adapter<PokeAdapter.PokeViewHolder>(){
             val todo = todos[position]
             tvTitle.text = todo.name
         }
-        holder.itemView.setOnClickListener {
-
-        }
     }
 
     }
